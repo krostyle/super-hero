@@ -13,6 +13,7 @@ $(document).ready(function() {
                 dataType: 'json',
                 success: function(data) {
                     addDescription(data);
+                    addGraphics(data);
                 },
                 error: function(err) {
                     alert('Hubo un problema al obtener el Super Héroe, intenta con otro ID');
@@ -71,13 +72,13 @@ const addDescription = (data) => {
 }
 
 const addGraphics = (data) => {
-
-    var chart = new CanvasJS.Chart("chartContainer", {
+    const powerStats = Object.keys(data.powerstats);
+    let chart = new CanvasJS.Chart("graphics", {
         theme: "light2", // "light1", "light2", "dark1", "dark2"
         exportEnabled: true,
         animationEnabled: true,
         title: {
-            text: "Desktop Browser Market Share in 2016"
+            text: "Estadísticas de Poder"
         },
         data: [{
             type: "pie",
@@ -88,13 +89,13 @@ const addGraphics = (data) => {
             indexLabelFontSize: 16,
             indexLabel: "{label} - {y}%",
             dataPoints: [
-                { y: 51.08, label: "Chrome" },
-                { y: 27.34, label: "Internet Explorer" },
-                { y: 10.62, label: "Firefox" },
-                { y: 5.02, label: "Microsoft Edge" },
-                { y: 4.07, label: "Safari" },
-                { y: 1.22, label: "Opera" },
-                { y: 0.44, label: "Others" }
+                { y: data.powerstats.combat, label: powerStats[0] },
+                { y: data.powerstats.durability, label: powerStats[1] },
+                { y: data.powerstats.intelligence, label: powerStats[2] },
+                { y: data.powerstats.power, label: powerStats[3] },
+                { y: data.powerstats.speed, label: powerStats[4] },
+                { y: data.powerstats.strength, label: powerStats[5] },
+
             ]
         }]
     });
